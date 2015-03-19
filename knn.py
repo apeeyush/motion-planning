@@ -5,7 +5,7 @@ def euclideanDistance(instance1, instance2):
 	distance = 0
 	length = len(instance1)
 	for x in range(length):
-		distance += min( abs(instance1[x]-instance2[x]), 360-abs(instance1[x]-instance2[x]) )
+		distance += abs(min( abs(instance1[x]-instance2[x]), 360-abs(instance1[x]-instance2[x]) ))
 	return distance
 	# length = len(instance1)
 	# for x in range(length):

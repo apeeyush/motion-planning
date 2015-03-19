@@ -71,7 +71,7 @@ def get_mid_pos(configuration1, configuration2):
 			mid_conf.append( ((angle1+angle2)/2+180)%360 )
 	return tuple(mid_conf)
 
-eps = 2
+eps = 1
 
 def showDatapoints(dataset):
 	for datapoint in dataset:
@@ -91,34 +91,32 @@ def check_path(configuration1, configuration2, obstacles, lengths):
 if __name__ == '__main__':
 	numDOF, lengths, numObst, obstacles = get_robot_data()
 	goal_positions = get_goals_data()
+	print 'Generating dataset..'
 	dataset = goal_positions
 	random_data = generate_data(1000, numDOF, obstacles, lengths)
 	dataset = dataset + random_data
 	numEdges = 0
-	print 'Generated dataset..'
+	print 'Finding nearest neighbors..'
 	G=nx.Graph()
 	for i in range(len(dataset)):
 		G.add_node(i)
 	for index, datapoint in enumerate(dataset):
-		neighbors = getNeighborIndices(dataset, datapoint, 10)
+		neighbors = getNeighborIndices(dataset, datapoint, 8)
 		for neighbor in neighbors:
 			if check_path(dataset[neighbor], datapoint, obstacles, lengths) and neighbor != index :
 				numEdges += 1
 				G.add_edge(neighbor, index, weight=euclideanDistance(dataset[neighbor], datapoint))
-	print numEdges
 	# showDatapoints(dataset)
+
+	print 'Finding shortest path..'
 	vertices = nx.shortest_path(G, source=0, target=1, weight="weight")
+	print vertices
 	positions = []
 	for vertex in vertices:
 		positions.append(dataset[vertex])
+	print G.edge[vertices[-1]][vertices[-2]]["weight"]
+
 	print 'Showing results..'
-
-	for index in range(len(vertices)-1):
-		if not check_path(positions[index], positions[index+1],obstacles, lengths):
-			print 'collision', index, positions[index], positions[index+1]
-		else:
-			print 'no collision!!'
-
 	gui.start_position = goal_positions[0]
 	gui.end_position = goal_positions[1]
 	gui.obstacles = obstacles
