@@ -29,8 +29,6 @@ class MyWidget(Widget):
         with self.canvas:
             Color(0, 1, 0)
             global i
-            print 'I am here', i
-            print positions
             if i < len(positions):
                 print 'Showing next configuration..'
                 Line(points=self.points_tuple_to_scaled_array(positions[i], scaleX, scaleY), width=1)
