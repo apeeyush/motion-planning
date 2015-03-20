@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Robot Motion Planning</title>
+    <meta name="description" content="CS365 (Artificial Intelligence) assignments">
+
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+
+  <body>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Robot Motion Planning</h1>
+    <p class="post-meta">March 20, 2015</p>
+  </header>
+
+  <article class="post-content">
+
+  <h2>Outline</h2>
+  <p>I have implemented Probablistic Roadmap algorithm. I have used <a href="http://kivy.org/">Kivy</a> for GUI. For finding shortest path, I have used <a href="https://networkx.github.io/">NetworkX</a>. <a href="http://stackoverflow.com/questions/3838329/how-can-i-check-if-two-segments-intersect">This</a> link was very helpful in implementing intersection check algorithm. C Space has been created using <a href="http://matplotlib.org/api/pyplot_api.html">pyplot</a>.</p>
+
+  <p>Code to be uploaded soon..</p>
+
+    <h2 id="motion-planning">Robot Motion Planning : 2 Arms</h2>
+
+    <pre>
+# robot.dat
+2                         // Number of arms
+200 200                   // Arm lengths
+2                         // Number of obstacles
+300 -100                  // Obstacle 1
+300 100
+-80 0                     // Obstacle 2
+-120 40
+
+# goals.dat
+90 0
+-60 -30
+190 -120
+170 120
+    </pre>
+
+
+      <h3>C Space</h3>
+      <img src="cSpace.png" alt="Path with 2 arms">
+
+      <h4>Video</h4>
+      <video width="320" height="240" controls>
+        <source src="2.mp4" type="video/mp4">
+      </video>
+
+      <h4>GIF</h4>
+      <img src="2.gif" alt="Path with 2 arms">
+
+      <h4>Images</h4>
+      <p>Higher Resolution images are available <a href="2/">here</a>.</p>
+
+      <br><hr>
+
+<h2 id="motion-planning">Robot Motion Planning : 5 Arms</h2>
+
+    <pre>
+# robot.dat
+5                        // Number of arms
+100 100 100 100 80       // Arm lengths
+3                        // Number of obstacles
+-450 300                 // Obstacle 1
+-100 300
+100 300                  // Obstacle 2
+400 300
+-200 100                 // Obstacle 3
+-250 150
+
+# goals.dat
+0 0 0 -90 0
+90 0 0 -60 -30
+180 0 -60 0 -120
+180 -90 60 0 30
+180 0 0 0 0
+90 0 0 60 45
+    </pre>
+
+      <h4>Video</h4>
+      <video width="320" height="240" controls>
+        <source src="5.mp4" type="video/mp4">
+      </video>
+
+      <h4>GIF</h4>
+      <img src="5.gif" alt="Path with 5 arms">
+
+      <h4>Images</h4>
+      <p>Higher Resolution images are available <a href="5/">here</a>.</p>
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+</footer>
+
+
+  </body>
+
+</html>

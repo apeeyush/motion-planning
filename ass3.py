@@ -76,10 +76,10 @@ eps = 1
 def showDatapoints(dataset):
 	for datapoint in dataset:
 		plt.scatter(datapoint[0], datapoint[1])
-	plt.show()
+	plt.savefig('cSpace.png')
 
 def check_path(configuration1, configuration2, obstacles, lengths):
-	if (euclideanDistance(configuration1, configuration2) < eps):
+	if (customDistance(configuration1, configuration2) < eps):
 		return True
 	else:
 		mid_pos = get_mid_pos(configuration1, configuration2)
@@ -91,10 +91,14 @@ def check_path(configuration1, configuration2, obstacles, lengths):
 if __name__ == '__main__':
 	numDOF, lengths, numObst, obstacles = get_robot_data()
 	goal_positions = get_goals_data()
+	noPathFlag=False
 	print 'Generating dataset..'
 	dataset = goal_positions
 	random_data = generate_data(1000, numDOF, obstacles, lengths)
 	dataset = dataset + random_data
+
+	# showDatapoints(dataset)
+
 	numEdges = 0
 	print 'Finding nearest neighbors..'
 	G=nx.Graph()
@@ -105,20 +109,26 @@ if __name__ == '__main__':
 		for neighbor in neighbors:
 			if check_path(dataset[neighbor], datapoint, obstacles, lengths) and neighbor != index :
 				numEdges += 1
-				G.add_edge(neighbor, index, weight=euclideanDistance(dataset[neighbor], datapoint))
-	# showDatapoints(dataset)
+				G.add_edge(neighbor, index, weight=customDistance(dataset[neighbor], datapoint))
 
 	print 'Finding shortest path..'
-	vertices = nx.shortest_path(G, source=0, target=1, weight="weight")
-	print vertices
 	positions = []
-	for vertex in vertices:
-		positions.append(dataset[vertex])
-	print G.edge[vertices[-1]][vertices[-2]]["weight"]
+	for i in range(len(goal_positions)-1):
+		try:
+			vertices = nx.shortest_path(G, source=i, target=i+1, weight="weight")
+		except nx.exception.NetworkXNoPath:
+			vertices = []
+			print 'No path'
+			noPathFlag=True
+		for vertex in vertices:
+			positions.append(dataset[vertex])
 
 	print 'Showing results..'
+
 	gui.start_position = goal_positions[0]
 	gui.end_position = goal_positions[1]
 	gui.obstacles = obstacles
 	gui.positions = get_coordinates_from_configurations(positions, lengths)
+	gui.goal_positions = get_coordinates_from_configurations(goal_positions, lengths)
+	gui.noPathFlag = noPathFlag
 	gui.MotionPlanningApp().run()
