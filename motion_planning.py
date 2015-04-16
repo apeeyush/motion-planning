@@ -6,8 +6,6 @@ import networkx as nx
 import gui
 import matplotlib.pyplot as plt
 
-# http://stackoverflow.com/questions/3838329/how-can-i-check-if-two-segments-intersect
-
 def gen_datapoint(dimension):
 	datapoint = []
 	for i in range(dimension):
@@ -71,7 +69,7 @@ def get_mid_pos(configuration1, configuration2):
 			mid_conf.append( ((angle1+angle2)/2+180)%360 )
 	return tuple(mid_conf)
 
-eps = 1
+eps = 3
 
 def showDatapoints(dataset):
 	for datapoint in dataset:
@@ -94,7 +92,7 @@ if __name__ == '__main__':
 	noPathFlag=False
 	print 'Generating dataset..'
 	dataset = goal_positions
-	random_data = generate_data(1000, numDOF, obstacles, lengths)
+	random_data = generate_data(2000, numDOF, obstacles, lengths)
 	dataset = dataset + random_data
 
 	# showDatapoints(dataset)

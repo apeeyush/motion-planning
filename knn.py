@@ -32,14 +32,6 @@ def getNeighborIndices(trainingSet, testInstance, k):
 		neighbors.append(distances[x][0])
 	return neighbors
 
-# def getKnnNeighbors(trainingSet, k):
-# 	nbrs=NearestNeighbors(n_neighbors=k,metric='pyfunc',func=customDistance)
-# 	nbrs.fit(trainingSet)
-# 	val=nbrs.kneighbors(trainingSet[0])
-# 	return nbrs
-# 	# distances, indices = nbrs.kneighbors(trainingSet)
-# 	# return distances, indices
-
 if __name__ == "__main__":
 	data1 = [2, 2, 2]
 	data2 = [4, 4, 4]
@@ -49,5 +41,3 @@ if __name__ == "__main__":
 	trainSet = [[2, 2, 2], [4, 4, 4]]
 	testInstance = [5, 5, 5]
 	k = 1
-	neighbors = getKnnNeighbors(trainSet, 1)
-	print(neighbors)
